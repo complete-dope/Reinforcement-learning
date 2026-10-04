@@ -39,6 +39,7 @@ for step in range(STEPS):
     A = (R - R.mean()) / (R.std() + 1e-6)
 
     new_lp = token_logprobs(policy, ids, prompt_ids.shape[1])
+    
     ratio = torch.exp(new_lp - old_lp)
     clipped = torch.clamp(ratio, 1 - EPS, 1 + EPS)
     pg = torch.min(ratio * A[:, None], clipped * A[:, None])
